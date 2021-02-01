@@ -14,7 +14,12 @@
 
 // CODE HERE...
 
+function callBinding(magicAnimals, updateAnimal, id) {
+    const filtered = magicAnimals.filter(animal => animal.id == id)
+    return updateAnimal.call(filtered, 'Trogdor')
 
+    
+}
 
 // *************
 // * PROBLEM 2 *
@@ -28,6 +33,11 @@
 // return the result of your updateAnimal invocation
 
 // CODE HERE...
+
+function applyBinding(magicAnimals, updateAnimal, id) {
+    const filtered = magicAnimals.filter(animal => animal.id == id)
+    return updateAnimal.call(filtered, ['being majestic', 'eating rainbows'] )
+}
 
 
 
@@ -49,7 +59,13 @@ var foo;
 
 // CODE HERE...
 
-
+function promiseMe($q) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve(foo = 'bar');
+        }, 20)
+      })
+}
 
 // *************
 // * PROBLEM 4 *
@@ -64,3 +80,38 @@ var foo;
 // and then resolve the array as you complete your promise.
 
 // CODE HERE...
+
+function emailList($q, $http) {
+    // let emails = []
+    return new Promise((resolve) => {
+        $http({
+            method: 'GET',
+            url: '/api/users'
+          })
+          .then((response) => {
+            for (let iterator of response) {
+                console.log(iterator);
+            }
+            resolve('hola')
+            //   const emails = response.reduce((n,m) => n.push(m.email), [])
+            //   console.log(emails);
+            // // firstUser = Object.values(response)[0][0];
+            // return emails;
+          })
+      })
+    
+    // $http({
+    //     method: 'GET',
+    //     url: '/api/users'
+    //   })
+    //   .then((response) => {
+    //     console.log(response);
+    //     for (const iterator of response) {
+    //         console.log(iterator);
+    //     }
+    //       const emails = response.reduce((n,m) => n.push(m.email), [])
+    //       console.log(emails);
+    //     // firstUser = Object.values(response)[0][0];
+    //     return emails;
+    //   })
+}

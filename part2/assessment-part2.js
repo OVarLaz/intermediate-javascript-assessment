@@ -44,6 +44,14 @@ function noWeakLink() {
     url: '/api/users'
   })
   // CODE HERE...
+  .then((response) => {
+    firstUser = Object.values(response)[0][0];
+    return response;
+  })
+  .then((response) => {
+    thirdUser = Object.values(response)[0][2];
+    return Object.values(response)[0][9];
+  })
 
 }
 
@@ -70,11 +78,12 @@ var elephant = {
   name: 'Horton'
 }
 function large() {
-
+  
   return 'My name is ' + this.name + ' and I am very heavy!'
 }
 // CODE HERE...
 
+const boundToElephant = large.bind(elephant);
 
 
 // *************
@@ -89,7 +98,9 @@ function large() {
 
 // CODE HERE...
 
-
+function deathStar(capacity, crew) {
+  return capacity.bind(crew);
+}
 
 // *************
 // * PROBLEM 4 *
@@ -104,7 +115,15 @@ function large() {
 
 // CODE HERE...
 
+function factorial(n) { 
+  return n == 0 ? 1 : n * factorial(n-1); 
+}
 
+function accountingOffice(assets) {
+  return function (liabilities) {
+    return assets + liabilities
+  }
+}
 
 // *************
 // * PROBLEM 5 *
@@ -129,6 +148,17 @@ function large() {
 
 // CODE HERE...
 
+function forgetter(name) {
+  this.name = name;
+  this.remember = [];
+  return function rememberall(item) {
+    this.remember.push(item)
+    return {
+      name: this.name,
+      remember: this.remember
+    }
+  }
+}
 
 
 // *************
@@ -156,3 +186,37 @@ function large() {
 // NOTE: Neither hunger nor danger should be able to exceed 100 or drop below 0.
 
 // CODE HERE...
+
+
+
+function frodo(startingHungerValue, startingDangerValue) {
+  this.startingHungerValue = startingHungerValue;
+  this.startingDangerValue = startingDangerValue;
+
+  function validation(val) {
+    return val > 100 ? 100 : val < 0 ? 0 : val;
+  }
+
+  return {
+    dinnerOverFire: () => {
+      this.startingHungerValue = validation(this.startingHungerValue - 25);
+      this.startingDangerValue = validation(this.startingDangerValue + 40);
+
+      return {
+        hunger: this.startingHungerValue,
+        danger: this.startingDangerValue,
+      }
+    },
+
+    hidingInBush: () => {
+      this.startingHungerValue = validation(this.startingHungerValue + 35);
+      this.startingDangerValue = validation(this.startingDangerValue - 20);
+
+      return {
+        hunger: this.startingHungerValue,
+        danger: this.startingDangerValue,
+      }
+    }
+  }
+  
+}
