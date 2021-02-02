@@ -15,10 +15,10 @@
 // CODE HERE...
 
 function callBinding(magicAnimals, updateAnimal, id) {
-    const filtered = magicAnimals.filter(animal => animal.id == id)
-    return updateAnimal.call(filtered, 'Trogdor')
+  const filtered = magicAnimals.find(animal => animal.id == id)
+  return updateAnimal.call(filtered, 'Trogdor')
 
-    
+  
 }
 
 // *************
@@ -35,8 +35,10 @@ function callBinding(magicAnimals, updateAnimal, id) {
 // CODE HERE...
 
 function applyBinding(magicAnimals, updateAnimal, id) {
-    const filtered = magicAnimals.filter(animal => animal.id == id)
-    return updateAnimal.call(filtered, ['being majestic', 'eating rainbows'] )
+  const filtered = magicAnimals.find(animal => animal.id == id)
+  // return updateAnimal.bind(filtered).apply(['being majestic', 'eating rainbows'])
+  // return updateAnimal.apply(['being majestic', 'eating rainbows'] )
+  return updateAnimal.apply(filtered, ['being majestic', 'eating rainbows'] )
 }
 
 
@@ -60,11 +62,11 @@ var foo;
 // CODE HERE...
 
 function promiseMe($q) {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve(foo = 'bar');
-        }, 20)
-      })
+  return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(foo = 'bar');
+      }, 20)
+    })
 }
 
 // *************
@@ -82,36 +84,31 @@ function promiseMe($q) {
 // CODE HERE...
 
 function emailList($q, $http) {
-    // let emails = []
-    return new Promise((resolve) => {
-        $http({
-            method: 'GET',
-            url: '/api/users'
-          })
-          .then((response) => {
-            for (let iterator of response) {
-                console.log(iterator);
-            }
-            resolve('hola')
-            //   const emails = response.reduce((n,m) => n.push(m.email), [])
-            //   console.log(emails);
-            // // firstUser = Object.values(response)[0][0];
-            // return emails;
-          })
-      })
-    
-    // $http({
-    //     method: 'GET',
-    //     url: '/api/users'
-    //   })
-    //   .then((response) => {
-    //     console.log(response);
-    //     for (const iterator of response) {
-    //         console.log(iterator);
-    //     }
-    //       const emails = response.reduce((n,m) => n.push(m.email), [])
-    //       console.log(emails);
-    //     // firstUser = Object.values(response)[0][0];
-    //     return emails;
-    //   })
+  // let emails = []
+  return new Promise((resolve) => {
+      $http({
+          method: 'GET',
+          url: '/api/users'
+        })
+        .then((response) => {
+          data = response['data']
+          data = data.map((user) => user.email)
+          resolve(data)
+        })
+    })
+  
+  // $http({
+  //     method: 'GET',
+  //     url: '/api/users'
+  //   })
+  //   .then((response) => {
+  //     console.log(response);
+  //     for (const iterator of response) {
+  //         console.log(iterator);
+  //     }
+  //       const emails = response.reduce((n,m) => n.push(m.email), [])
+  //       console.log(emails);
+  //     // firstUser = Object.values(response)[0][0];
+  //     return emails;
+  //   })
 }
